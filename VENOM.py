@@ -37,3 +37,17 @@ def VENOM_TARGETS(target):
     print("-" * 50)
     
 # Tryouts + Exceptions needed!
+
+if __VENOM__ == "__main__":
+    print("-" * 50)
+
+    while True:
+        try:
+            user_input = input("\nEnter the target: ")
+
+            if user_input.lower() == "bye":
+                print("Exiting the program. Goodbye!")
+                break
+
+            target = socket.gethostbyname(user_input)
+            scan_ports(target)
