@@ -15,3 +15,6 @@ Scanning... done!
 Port 21 is [RESULT]
 
 """
+
+import time
+from datetime import datetime
