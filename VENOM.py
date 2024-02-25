@@ -71,6 +71,9 @@ def VENOM_ANSI_BANNER():
     print(VENOM_CONTENT_COLOR, end='')
 
 def VENOM_SCAN_ANIMATION():
+    """
+    Function to display a scanning animation during the port scanning process.
+    """
     chars = "/—\|"
     for char in itertools.cycle(chars):
         sys.stdout.write('\rScanning... ' + char)
@@ -103,7 +106,7 @@ def VENOM_TARGETS(target, VENOM_INFO_OUTPUT):
     else:
         print(f"Scanning Target: {target}")
         print(f"Scanning started at: {str(datetime.now())}")
-        print("-" * 50)
+        print("-" * 75)
 
         try:
             VENOM_SCAN_PROCESS = threading.Thread(target=VENOM_SCAN_ANIMATION)
