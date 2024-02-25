@@ -16,26 +16,58 @@ Port 21 is [RESULT]
 
 """
 import socket
-import theading
+import threading
 import time
 from datetime import datetime
+import itertools
+import sys
+
+__VENOM__ = "__main__"
 
 def multi_threading_scan_animation():
+    """
+    Function to display a scanning animation during the port scanning process.
+    """
     chars = "/—\|"
     for char in itertools.cycle(chars):
-        print('\rScanning... ' + char, end='')
+        sys.stdout.write('\rScanning... ' + char)
+        sys.stdout.flush()
         time.sleep(0.1)
 
 def VENOM_TARGETS(target):
+    """
+    Function to scan open ports on a target and display the results.
+    
+    :param target: The target IP address or domain to scan.
+    """
     print("\n" + "-" * 50)
-    print("VENOM - PORT SCANNER")
+    print("PORT SCANNER")
     print("A project by: https://www.heimdall-security.net")
     print("-" * 50)
 
     print(f"Scanning Target: {target}")
     print(f"Scanning started at: {str(datetime.now())}")
     print("-" * 50)
-    
+
+    try:
+        animate_thread = threading.Thread(target=multi_threading_scan_animation)
+        animate_thread.start()
+
+        for port in range(1, 65536):
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.settimeout(1)
+                result = s.connect_ex((target, port))
+                if result == 0:
+                    sys.stdout.write('\rScanning... done!')
+                    sys.stdout.flush()
+                    print(f"\nPort {port} is open")
+
+        animate_thread.join()
+
+    except socket.gaierror:
+        print("\nHostname Could Not Be Resolved !!!")
+    except socket.error:
+        print("\nServer not responding !!!")
 
 if __VENOM__ == "__main__":
     print("-" * 50)
@@ -49,4 +81,7 @@ if __VENOM__ == "__main__":
                 break
 
             target = socket.gethostbyname(user_input)
-            scan_ports(target)
+            VENOM_TARGETS(target)
+
+        except Exception as e:
+            print(f"\nAn error occurred: {e}")
