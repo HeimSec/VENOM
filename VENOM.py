@@ -15,6 +15,25 @@ Scanning... done!
 Port 21 is [RESULT]
 
 """
-
+import socket
+import theading
 import time
 from datetime import datetime
+
+def multi_threading_scan_animation():
+    chars = "/-\"
+    for char in itertools.cycle(chars):
+        print('\rScanning... ' + char, end='')
+        time.sleep(0.1)
+
+def VENOM_TARGETS(target):
+    print("\n" + "-" * 50)
+    print("PORT SCANNER")
+    print("A project by: https://www.heimdall-security.net")
+    print("-" * 50)
+
+    print(f"Scanning Target: {target}")
+    print(f"Scanning started at: {str(datetime.now())}")
+    print("-" * 50)
+    
+# Tryouts + Exceptions needed!
