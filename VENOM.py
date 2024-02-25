@@ -51,3 +51,4 @@ if __VENOM__ == "__main__":
 
             target = socket.gethostbyname(user_input)
             scan_ports(target)
+# Here also some exceptions
