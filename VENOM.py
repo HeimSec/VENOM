@@ -28,7 +28,7 @@ def multi_threading_scan_animation():
 
 def VENOM_TARGETS(target):
     print("\n" + "-" * 50)
-    print("PORT SCANNER")
+    print("VENOM - PORT SCANNER")
     print("A project by: https://www.heimdall-security.net")
     print("-" * 50)
 
