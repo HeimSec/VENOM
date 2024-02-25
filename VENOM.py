@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """
 CODENAME   :    VENOM.py
 DESCRIPTION:    Simple tryout of a Port Scanner
@@ -53,7 +54,23 @@ Traceback (most recent call last):
   File "/usr/lib/python3.10/threading.py", line 1567, in _shutdown
     lock.acquire()
 KeyboardInterrupt:
+
+I want to try to build a basic port scanner that can scan a target for open ports within the range of 1 to 65535.
+It should provide a minimalistic command-line interface for the user to enter the target network (IP or FQDN).
+I´m testing multi-threading to provide a scanning animation during the port scanning process.
+
+Example:
+Enter the target: fritz.box
+
+Scanning Target: 192.168.178.1
+Scanning started at: [DATE] [TIMESTAMP]
+--------------------------------------------------
+Scanning... done!
+Port 21 is [RESULT]
+
+First working version including some issues that need to be resolved:
 """
+
 import sys
 import time
 from datetime import datetime
@@ -64,10 +81,13 @@ import threading
 import itertools
 
 __VENOM__ = "__main__"
-    
+
 def VENOM_ANSI_BANNER():
+    """
+    Display the VENOM ASCII banner with green ANSI color.
+    """
     VENOM_CODENAME = pyfiglet.figlet_format("VENOM PORTSCAN", font="slant")
-    VENOM_CONTENT_COLOR = "\033[92m" + VENOM_CODENAME + "\033[0m"
+    VENOM_CONTENT_COLOR = "\033[92m" + VENOM_CODENAME + "\033[0m"  # ANSI color code for green
     print(VENOM_CONTENT_COLOR, end='')
 
 def VENOM_SCAN_ANIMATION():
@@ -83,9 +103,10 @@ def VENOM_SCAN_ANIMATION():
 def VENOM_TARGETS(target, VENOM_INFO_OUTPUT):
     """
     Function to scan open ports on a target and display the results.
-    
-    Param target: The target IP address or the Fully Qualified Domain Name [FQDN] to scan.
+
+    :param target: The target IP address or the Fully Qualified Domain Name [FQDN] to scan.
                    https://url.webservice.digital/FQDN
+    :param VENOM_INFO_OUTPUT: Flag to indicate if detailed information for open ports should be displayed.
     """
     VENOM_ANSI_BANNER()
 
@@ -135,6 +156,11 @@ def VENOM_TARGETS(target, VENOM_INFO_OUTPUT):
             print("\nServer not responding !!!")
 
 def VENOM_DISPLAY_ALL_PORTS_INFO(VENOM_UNLEASHED_PORTS=None):
+    """
+    Display detailed information for known open ports.
+
+    :param VENOM_UNLEASHED_PORTS: List of open ports.
+    """
     VENOM_MOST_WANTED = {
         21: "FTP - File Transfer Protocol. Used for transferring files between a server and a client.",
         22: "SSH - Secure Shell. Provides a secure channel over an unsecured network in a client-server architecture.",
@@ -153,10 +179,11 @@ def VENOM_DISPLAY_ALL_PORTS_INFO(VENOM_UNLEASHED_PORTS=None):
     print("-" * 50)
 
     if VENOM_UNLEASHED_PORTS is not None:
-        for VENOM_PORT_LISTENER in VENOM_UNLEASHED_VENOM_PORT_LISTENERS:
-            if VENOM_PORT_LISTENER in VENOM_MOST_WANTED:
-                service = VENOM_MOST_WANTED[VENOM_PORT_LISTENER].split(' - ')[0]
-                description = VENOM_MOST_WANTED[VENOM_PORT_LISTENER].split(' - ')[1]
+        for port in VENOM_UNLEASHED_PORTS:
+            if port in VENOM_MOST_WANTED:
+                service = VENOM_MOST_WANTED[port].split(' - ')[0]
+                description = VENOM_MOST_WANTED[port].split(' - ')[1]
+                print("{:<10} {:<30} {:<}".format(port, service, description))
             else:
                 print(f"{port}       {'Unknown'}                     {'Unknown'}")
 
