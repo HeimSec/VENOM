@@ -36,7 +36,6 @@ def VENOM_TARGETS(target):
     print(f"Scanning started at: {str(datetime.now())}")
     print("-" * 50)
     
-# Tryouts + Exceptions needed!
 
 if __VENOM__ == "__main__":
     print("-" * 50)
@@ -51,4 +50,3 @@ if __VENOM__ == "__main__":
 
             target = socket.gethostbyname(user_input)
             scan_ports(target)
-# Here also some exceptions
