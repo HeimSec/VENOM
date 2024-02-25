@@ -21,7 +21,7 @@ import time
 from datetime import datetime
 
 def multi_threading_scan_animation():
-    chars = "/-\"
+    chars = "/—\|"
     for char in itertools.cycle(chars):
         print('\rScanning... ' + char, end='')
         time.sleep(0.1)
